@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="website icon" type="jpg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdSeCayRwzDSmFLEMtMunXzq2Sp3VrQPtJYw&s">
+  <title>Noor Bakery Invoice System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="h-screen w-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1568254183919-78a4f43a2877?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmFrZXJ5fGVufDB8fDB8fHww');">
+
+  <!-- LOGIN CARD -->
+  <div id="login-card" class="backdrop-blur-xl bg-black/30 shadow-2xl rounded-2xl p-10 w-96 border border-white/40">
+    <h1 class="text-3xl font-extrabold text-orange-600 text-center mb-2">Noor Bakery 🍞</h1>
+    <p class="text-center text-white mb-6">Please Sign In</p>
+    
+    <div class="mb-4">
+      <label class="block text-xl font-bold text-white mb-2">Username</label>
+      <input id="username" type="text" placeholder="Enter username"
+          class="w-full px-4 py-3 text-lg font-bold rounded-xl border focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white/80 placeholder:text-gray-600">
+    </div>
+
+    <div class="mb-4">
+      <label class="block text-xl font-bold text-white mb-2">Password</label>
+      <input id="password" type="password" placeholder="Enter password"
+          class="w-full px-4 py-3 text-lg font-bold rounded-xl border focus:outline-none focus:ring-2 focus:ring-orange-400 bg-white/80 placeholder:text-gray-600">
+    </div>
+
+    <p id="error" class="text-red-300 text-sm mb-4 hidden">Invalid username or password!</p>
+    <button onclick="login()" class="w-full py-3 rounded-xl bg-gradient-to-r from-orange-400 to-yellow-400 text-black font-semibold shadow-md hover:opacity-90 transition">
+      Login
+    </button>
+  </div>
+
+  <!-- INVOICE APP -->
+  <div id="invoice-app" class="hidden w-full h-full flex items-center justify-center">
+    <div class="max-w-3xl mx-auto backdrop-blur-xl bg-white/30 shadow-2xl rounded-xl p-6 w-[90%] h-[90%] flex flex-col border border-white/40">
+
+      <!-- Header with logout button -->
+      <div class="flex justify-between items-center mb-4"> 
+        <h2 class="text-2xl font-bold text-blue-600">Noor Bakery — Invoice Generator</h2>
+        <button onclick="logout()" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+      
+      <!-- Header Info -->
+      <div class="flex justify-between mb-4 text-lg font-semibold text-gray-700">
+        <p>Bill No: <span id="bill-no" class="font-bold text-gray-800"></span></p>
+        <p>Date: <span id="bill-date" class="font-bold text-gray-800"></span></p>
+      </div>
+
+      <!-- Input Form -->
+      <div class="grid grid-cols-3 gap-4 mb-4">
+        <input id="item" type="text" placeholder="Item Name"
+          class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input id="qty" type="number" placeholder="Qty"
+          class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+        <input id="price" type="number" placeholder="Price"
+          class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400">
+      </div>
+      
+      <button onclick="addItem()"
+        class="mb-4 w-full bg-gradient-to-r from-orange-400 to-yellow-400 text-white font-semibold py-3 rounded-lg shadow-md hover:opacity-90 transition">
+        Add Item
+      </button>
+
+      <!-- Receipt Preview -->
+      <div id="receipt" class="backdrop-blur-lg bg-white/20 p-4 rounded-lg shadow-inner mb-4 flex-1 flex flex-col border border-white/30">
+        <h3 class="text-lg font-semibold text-gray-700 mb-2">Receipt Preview</h3>
+        <div class="overflow-y-auto max-h-60">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-gray-400">
+                <th class="p-2 text-gray-700">Product</th>
+                <th class="p-2 text-gray-700">Price</th>
+                <th class="p-2 text-gray-700">Qty</th>
+                <th class="p-2 text-gray-700">Total</th>
+              </tr>
+            </thead>
+            <tbody id="receipt-body" class="divide-y divide-gray-300"></tbody>
+          </table>
+        </div>
+        <div class="mt-3 font-bold text-gray-800">Grand Total: Rs <span id="total">0.00</span></div>
+      </div>
+
+      <!-- Download Button -->
+      <button onclick="downloadPDF()"
+        class="w-full py-3 rounded-xl bg-green-500 text-white font-semibold shadow-md hover:opacity-90 transition">
+        Download Receipt PDF
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
